@@ -9,8 +9,12 @@ backend:
   auth_endpoint: auth
 
 # 圖片上傳後存放的資料夾，以及在文章裡對應的參照路徑
-media_folder: "src/assets/uploads"
-public_folder: "../../assets/uploads"
+# 目前 CMS 表單裡還沒有任何 image 欄位在用這個設定；如果之後要加圖片欄位，
+# 且該欄位對應到 content.config.ts 裡用 Astro image() 產生的 schema（例如
+# about/home），要留意 Astro 的 image() 需要「相對於內容檔案」的匯入路徑，
+# 跟這裡的絕對網址路徑不是同一回事，屆時可能要改成純字串 schema + <img> 標籤。
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 # 同工儲存後，是否直接 commit 到 main，或是先建立 PR 讓人審核再合併
 publish_mode: editorial_workflow
