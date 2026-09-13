@@ -1,0 +1,11 @@
+---
+import CollectionLayout from "@components/discipleProfile/CollectionLayout.astro";
+import { getIndex, getGroups } from "@lib/contentParser";
+import { sortByOrder } from "@lib/sortFunctions";
+import type { DiscipleProfileEntry } from "@/types";
+
+const entryIndex = (await getIndex("discipleProfile")) as DiscipleProfileEntry;
+const points = (await getGroups("discipleProfile", sortByOrder)) as DiscipleProfileEntry[];
+---
+
+<CollectionLayout entryIndex={entryIndex} points={points} />

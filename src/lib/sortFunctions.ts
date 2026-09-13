@@ -10,6 +10,14 @@ export const sortByDate = (entries: GenericEntry[]): GenericEntry[] => {
   return sortedEntries;
 };
 
+// Sort by order
+export const sortByOrder = (entries: GenericEntry[]): GenericEntry[] => {
+  const sortedEntries = entries.sort(
+    (a: any, b: any) => (a.data.order ?? 0) - (b.data.order ?? 0),
+  );
+  return sortedEntries;
+};
+
 // Sort by title
 export const sortByTitle = (entries: GenericEntry[]): GenericEntry[] => {
   const sortedEntries = entries.sort((a: any, b: any) =>

@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@components/base/BaseLayout.astro";
+import PageHeader from "@components/common/PageHeader.astro";
+import type { DiscipleProfileEntry } from "@/types";
+import { render } from "astro:content";
+
+interface Props {
+  entryIndex: DiscipleProfileEntry;
+  points: DiscipleProfileEntry[];
+}
+
+const { entryIndex, points } = Astro.props;
+const { books } = entryIndex.data;
+const { Content } = await render(entryIndex);
+---
+
+<BaseLayout title={entryIndex.data.title} description={entryIndex.data.description}>
+  <PageHeader title={entryIndex.data.title} />
+  <section class="section">
+    <div class="flex container row justify-center">
+      <div class="col lg:col-8">
+        <div class="glass rounded-lg p-4 mb-8 intersect:animate-fadeUp opacity-0">
+          <ol class="list-decimal list-inside">
+            {
+              points.map((point) => (
+                <li class="my-3">
+                  <a href={`/disciple-profile/${point.id.replace("/-index", "")}`}>
+                    <span class="font-bold">{point.data.title}</span>
+                  </a>
+                  {point.data.summary && (
+                    <p class="mt-1 text-sm opacity-80">{point.data.summary}</p>
+                  )}
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        {
+          books && books.length > 0 && (
+            <div class="glass rounded-lg p-4 intersect:animate-fadeUp opacity-0">
+              <Content />
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

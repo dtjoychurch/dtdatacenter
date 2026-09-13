@@ -14,8 +14,16 @@ interface SearchResult {
   refIndex: number;
 }
 
+// A content collection's key (e.g. "discipleProfile") doesn't always match the
+// URL segment its pages are actually served under (e.g. "/disciple-profile").
+// List exceptions here; anything not listed falls back to its collection key.
+const collectionRoutes: Partial<Record<SearchableEntry["collection"], string>> = {
+  discipleProfile: "disciple-profile",
+};
+
 const getPath = (entry: SearchableEntry) => {
-  return `${entry.collection}/${entry.id.replace("-index", "")}`;
+  const base = collectionRoutes[entry.collection] ?? entry.collection;
+  return `${base}/${entry.id.replace(/\/?-index$/, "")}`;
 };
 
 const SearchPage = ({ searchList }: Props) => {
@@ -30,7 +38,10 @@ const SearchPage = ({ searchList }: Props) => {
   const fuse = new Fuse(searchList, {
     keys: ["data.title", "data.description", "id", "collection", "body"],
     includeMatches: true,
-    minMatchCharLength: 3,
+    // Chinese words are commonly just 2 characters (耶穌, 禱告, 門徒...); a
+    // minMatchCharLength tuned for English (3+) silently drops every match
+    // shorter than that, making 2-character CJK searches return nothing.
+    minMatchCharLength: 1,
     threshold: 0.5,
   });
 
@@ -46,7 +57,7 @@ const SearchPage = ({ searchList }: Props) => {
   }, []);
 
   useEffect(() => {
-    let inputResult = inputVal.length > 2 ? fuse.search(inputVal) : [];
+    let inputResult = inputVal.length > 1 ? fuse.search(inputVal) : [];
     setSearchResults(inputResult);
 
     if (inputVal.length > 0) {

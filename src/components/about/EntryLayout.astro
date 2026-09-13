@@ -18,11 +18,11 @@ const { Content } = await render(entry);
   <section class="section-sm">
     <div class="container">
       <div class="row justify-center">
-        <div class="glass rounded-lg text-center p-8 md:col-10 lg:col-7 intersect:animate-fadeUp opacity-0 intersect-no-queue">
+        <div class="glass rounded-lg text-left p-8 md:col-10 lg:col-8 intersect:animate-fadeUp opacity-0 intersect-no-queue">
           {
             image && (
               <Image
-                class="mx-auto mb-6 rounded-lg w-64"
+                class="mb-6 rounded-lg w-64"
                 src={image}
                 alt={imageAlt}
                 width={1024}
@@ -32,7 +32,9 @@ const { Content } = await render(entry);
             )
           }
           <h2 set:html={markdownify(title)} class="h3 mb-6" />
+          <div class="content">
             <Content />
+          </div>
         </div>
       </div>
     </div>

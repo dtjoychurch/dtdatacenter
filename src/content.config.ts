@@ -62,6 +62,35 @@ const blog = defineCollection({
     }),
 });
 
+const resourceLink = z.object({
+  title: z.string(),
+  url: z.string(),
+});
+
+// A `discipleProfile` entry is one of three shapes, distinguished by nesting depth:
+// - "-index" (collection root): the /disciple-profile landing page. Uses `books`.
+// - "<point>/-index": one of the 15 profile points. Uses `order` + `summary`.
+// - "<point>/<category>-<slug>": a single article/bible-study page. Uses
+//   `category` (+ `pdfs` when relevant). All fields are optional on one shared
+//   schema since every entry shape lives in the same collection.
+const discipleProfile = defineCollection({
+  loader: glob({
+    pattern: "**\/[^_]*.{md,mdx}",
+    base: "./src/content/disciple-profile",
+  }),
+  schema: ({ image }) =>
+    searchable.extend({
+      order: z.number().optional(),
+      summary: z.string().optional(),
+      image: image().optional(),
+      imageAlt: z.string().default(""),
+      sourceUrl: z.string().optional(),
+      category: z.enum(["article", "bibleStudy"]).optional(),
+      pdfs: z.array(z.string()).optional(),
+      books: z.array(resourceLink).optional(),
+    }),
+});
+
 const docs = defineCollection({
   loader: glob({ pattern: "**\/[^_]*.{md,mdx}", base: "./src/content/docs" }),
   schema: ({ image }) =>
@@ -167,6 +196,7 @@ export const collections = {
   about,
   authors,
   blog,
+  discipleProfile,
   docs,
   home,
   indexCards,

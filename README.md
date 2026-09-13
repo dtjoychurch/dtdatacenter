@@ -60,6 +60,10 @@ Astrogon is a rapidly-customizable multipurpose website template built using Ast
 
 Every one of these features was designed with modularity and customizability in mind, for the smoothest development experience possible. For more details, see [docs/customization.md](docs/customization.md).
 
+### Content Management (CMS)
+
+A Git-based CMS ([Sveltia CMS](https://github.com/sveltia/sveltia-cms)) is wired up at `/admin`, so non-technical editors can update content through a web form instead of editing files directly. See [docs/cms-setup.md](docs/cms-setup.md) for the one-time setup steps.
+
 ## Recommended Technologies
 
 - [Git](https://git-scm.com)

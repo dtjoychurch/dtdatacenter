@@ -6,6 +6,7 @@ export type GenericEntry = CollectionEntry<CollectionKey>;
 export type AboutEntry = CollectionEntry<"about">;
 export type AuthorsEntry = CollectionEntry<"authors">;
 export type BlogEntry = CollectionEntry<"blog">;
+export type DiscipleProfileEntry = CollectionEntry<"discipleProfile">;
 export type DocsEntry = CollectionEntry<"docs">;
 export type HomeEntry = CollectionEntry<"home">;
 export type IndexCardsEntry = CollectionEntry<"indexCards">;
@@ -18,6 +19,7 @@ export type SearchableEntry =
   | AboutEntry
   | AuthorsEntry
   | BlogEntry
+  | DiscipleProfileEntry
   | DocsEntry
   | PoetryEntry
   | PortfolioEntry

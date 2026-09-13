@@ -1,8 +1,19 @@
 ---
-title: Hey, I'm Jane Doe!
-description: this is meta description
-image: "@assets/profile/jane-doe.jpg"
+title: 關於門訓資料庫
+description: 門訓資料庫是一個以「門徒概要15點」為核心的線上資源平台，收錄與生命成長對應的文章與查經材料，提供教會同工與弟兄姊妹在個人靈修、小組查經與門徒訓練上使用。
 draft: false
 ---
 
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis illum nesciunt commodi vel nisi ut alias excepturi ipsum, totam, labore tempora, odit ex iste tempore sed. Fugit voluptatibus perspiciatis assumenda nulla ad nihil, omnis vel, doloremque sit quam autem optio maiores, illum eius facilis et quo consectetur provident dolor similique! Enim voluptatem dicta expedita veritatis repellat dolorum impedit, provident quasi at.
+門訓資料庫是一個為教會而設的門徒訓練線上資源平台，盼望陪伴每一位跟隨耶穌的人，在日常生活中一步一步成長，活出更像基督的生命。
+
+我們相信，門徒訓練不只是學習更多聖經知識，更是一段讓生命不斷被神更新、被祂塑造的旅程。因此，門訓資料庫以「**門徒概要15點**」為核心，整理出成熟門徒生命中十五項重要的特質與樣式。
+
+從「**以耶穌為中心**」、「**經常吸收神的話語**」，到「**人生召命**」、「**強健的家庭**」，這十五項特質涵蓋了我們與神的關係、個人生命與品格、群體生活、事奉，以及傳福音等不同面向。
+
+每一項特質之下，都整理了相關的**文章**與**查經材料**，幫助弟兄姊妹在不同的生命階段，找到合適的內容，無論是個人靈修、小組查經，或教會的門徒訓練，都能有所幫助。
+
+我們盼望，這裡不只是一本可以查找資料的「資料庫」，更是一個能夠陪伴生命成長的地方。
+
+願每一次閱讀、每一次思想神的話語、每一次與弟兄姊妹的分享，都成為我們更深認識耶穌、跟隨耶穌的機會。
+
+**願我們一同成為更像基督的門徒，也一同活出神所賜給我們豐盛而美好的生命。**

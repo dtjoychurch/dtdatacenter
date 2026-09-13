@@ -1,10 +1,13 @@
 {
-  "name": "Astrogon",
+  "name": "dtdatacenter",
   "version": "1.0.0",
-  "description": "Template.",
-  "author": "Jane Doe",
+  "description": "門訓資料庫 - Joy Church discipleship resource database.",
+  "author": "Joy Church",
   "license": "MIT",
   "packageManager": "npm@10.8.2",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@components/base/BaseLayout.astro";
+import PageHeader from "@components/common/PageHeader.astro";
+import Accordion from "@shortcodes/Accordion";
+import type { DiscipleProfileEntry } from "@/types";
+
+interface Props {
+  point: DiscipleProfileEntry;
+  entries: DiscipleProfileEntry[];
+}
+
+const { point, entries } = Astro.props;
+const { title, summary, sourceUrl } = point.data;
+
+const categoryGroups: { key: "article" | "bibleStudy"; label: string }[] = [
+  { key: "article", label: "文章工具" },
+  { key: "bibleStudy", label: "查經工具" },
+];
+---
+
+<BaseLayout title={title} description={summary}>
+  <PageHeader title={title} />
+  <section class="section">
+    <div class="flex container row justify-center">
+      <div class="col lg:col-8">
+        {
+          summary && (
+            <div class="glass rounded-lg p-4 mb-6 intersect:animate-fadeUp opacity-0">
+              <p class="font-medium">{summary}</p>
+            </div>
+          )
+        }
+        {
+          categoryGroups.map(({ key, label }) => {
+            const items = entries.filter((e) => e.data.category === key);
+            if (items.length === 0) return null;
+            return (
+              <Accordion client:load title={`${label}（${items.length}）`}>
+                <ul class="list-disc list-inside py-2">
+                  {items.map((item) => (
+                    <li class="my-1">
+                      <a href={`/disciple-profile/${item.id}`}>{item.data.title}</a>
+                    </li>
+                  ))}
+                </ul>
+              </Accordion>
+            );
+          })
+        }
+        {
+          sourceUrl && (
+            <p class="text-sm opacity-70 mt-4">
+              原始資料來源：
+              <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                {sourceUrl}
+              </a>
+            </p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</BaseLayout>

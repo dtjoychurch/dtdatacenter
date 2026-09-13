@@ -1,0 +1,98 @@
+# Sveltia CMS 設定檔
+# 文件: https://github.com/sveltia/sveltia-cms#configuration-options
+
+backend:
+  name: github
+  repo: dtjoychurch/dtdatacenter # GitHub repo (owner/name)
+  branch: main
+  # TODO: 網站正式網域確定後，把下面換成實際網域(例如 https://dtdatacenter.pages.dev 或自訂網域)
+  base_url: https://your-site-domain.example
+  auth_endpoint: auth
+
+# 圖片上傳後存放的資料夾，以及在文章裡對應的參照路徑
+media_folder: "src/assets/uploads"
+public_folder: "../../assets/uploads"
+
+# 同工儲存後，是否直接 commit 到 main，或是先建立 PR 讓人審核再合併
+publish_mode: editorial_workflow
+
+locale: zh-Hant
+
+# 註：Blog / Docs / Poetry / Recipes / Authors / Portfolio 是範本內建的示範內容，
+# 網站上已隱藏(不在選單/搜尋中)，所以這裡也先不開放編輯。內容檔案都還在 src/content/ 底下，
+# 之後要重新啟用的話，把對應區塊從 git 歷史（或 docs/cms-setup.md 的說明）復原回來即可。
+collections:
+  - name: "disciple-profile"
+    label: "門徒概要"
+    folder: "src/content/disciple-profile"
+    create: true
+    delete: false
+    nested: { depth: 100 }
+    identifier_field: title
+    # 這個 collection 混合了兩種頁面（資料夾底下的「-index」是 15 點之一的總覽頁，
+    # 其他檔案是底下的單篇文章/查經/信息稿），欄位都設成非必填，兩種頁面共用同一張表單，
+    # 編輯時忽略跟該頁面無關的欄位即可（例如編總覽頁時，category 留空）。
+    fields:
+      - { name: title, label: "標題", widget: string }
+      - { name: order, label: "順序（1~15，只有 15 點總覽頁需要）", widget: number, required: false }
+      - { name: summary, label: "一句話摘要（只有 15 點總覽頁需要）", widget: text, required: false }
+      - name: category
+        label: "資源類型（只有單篇文章需要）"
+        widget: select
+        required: false
+        options:
+          - { label: "文章工具", value: "article" }
+          - { label: "查經工具", value: "bibleStudy" }
+      - { name: pdfs, label: "PDF 下載連結（本站網址）", widget: list, required: false }
+      - { name: description, label: "SEO 描述", widget: text, required: false }
+      - { name: sourceUrl, label: "原網站來源連結", widget: string, required: false }
+      - { name: draft, label: "草稿（不對外顯示）", widget: boolean, default: false, required: false }
+      - { name: body, label: "內文", widget: markdown, required: false }
+
+  - name: "disciple-profile-index"
+    label: "門徒概要（總覽頁）"
+    files:
+      - name: "index"
+        label: "總覽頁內容"
+        file: "src/content/disciple-profile/-index.md"
+        fields:
+          - { name: title, label: "標題", widget: string }
+          - { name: description, label: "說明文字", widget: text, required: false }
+          - name: books
+            label: "書籍工具"
+            widget: list
+            required: false
+            fields:
+              - { name: title, label: "標題", widget: string }
+              - { name: url, label: "連結", widget: string }
+
+  - name: "singles"
+    label: "單頁內容"
+    files:
+      - name: "about"
+        label: "關於我們"
+        file: "src/content/about/-index.md"
+        fields:
+          - { name: title, label: "標題", widget: string }
+          - { name: description, label: "說明文字", widget: text, required: false }
+          - { name: body, label: "內文", widget: markdown, required: false }
+      - name: "home"
+        label: "首頁"
+        file: "src/content/home/-index.md"
+        fields:
+          - { name: title, label: "標題", widget: string }
+          - { name: content, label: "內容", widget: text }
+          - name: button
+            label: "按鈕"
+            widget: object
+            required: false
+            fields:
+              - { name: label, label: "文字", widget: string }
+              - { name: link, label: "連結", widget: string, required: false }
+      - name: "terms"
+        label: "條款/版權說明"
+        file: "src/content/terms/-index.md"
+        fields:
+          - { name: title, label: "標題", widget: string }
+          - { name: description, label: "說明文字", widget: text, required: false }
+          - { name: body, label: "內文", widget: markdown, required: false }

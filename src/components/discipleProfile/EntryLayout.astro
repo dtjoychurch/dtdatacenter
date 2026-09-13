@@ -1,0 +1,88 @@
+---
+import BaseLayout from "@components/base/BaseLayout.astro";
+import Share from "@components/common/Share.astro";
+import { plainify } from "@lib/textConverter";
+import type { DiscipleProfileEntry } from "@/types";
+
+import { render } from "astro:content";
+import EntryHeader from "@components/common/EntryHeader.astro";
+
+interface Props {
+  entry: DiscipleProfileEntry;
+  pointEntry?: DiscipleProfileEntry;
+}
+
+const { entry, pointEntry } = Astro.props;
+const { title, description, autodescription, category, sourceUrl, pdfs } = entry.data;
+const { Content } = await render(entry);
+
+const descriptionLength = 200;
+const entryDescription =
+  description || (autodescription ? plainify(entry.body!.slice(0, descriptionLength)) : null);
+
+const categoryLabels: Record<string, string> = {
+  article: "文章工具",
+  bibleStudy: "查經工具",
+};
+const pointSlug = entry.id.split("/")[0];
+---
+
+<BaseLayout title={title} description={entryDescription}>
+  <section class="flex container justify-center my-8">
+    <div class="col md:col-8">
+      {
+        pointEntry && (
+          <p class="mb-4 text-sm">
+            <a href={`/disciple-profile/${pointSlug}`}>&larr; {pointEntry.data.title}</a>
+            {category && <span class="opacity-70"> ／ {categoryLabels[category]}</span>}
+          </p>
+        )
+      }
+      <article class="">
+        <section>
+          <EntryHeader entry={entry} />
+        </section>
+        <section class="content mb-4 glass px-4 rounded-lg">
+          <Content />
+        </section>
+        {
+          pdfs && pdfs.length > 0 && (
+            <section class="content mb-4 glass px-4 py-2 rounded-lg">
+              <h3>下載</h3>
+              <ul class="list-disc list-inside">
+                {pdfs.map((pdfUrl) => (
+                  <li>
+                    <a href={pdfUrl} target="_blank" rel="noopener noreferrer">
+                      下載 PDF
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+        {
+          sourceUrl && (
+            <p class="text-sm opacity-70">
+              原始資料來源：
+              <a href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                {sourceUrl}
+              </a>
+            </p>
+          )
+        }
+      </article>
+    </div>
+  </section>
+  <section class=`container mt-4 mb-8 col md:col-8`>
+    <hr />
+    <div class="flex items-center justify-center lg:justify-end mt-4">
+      <Share
+        title={title}
+        description={entryDescription}
+        folder={"disciple-profile"}
+        id={entry.id}
+      />
+    </div>
+  </section>
+</BaseLayout>
