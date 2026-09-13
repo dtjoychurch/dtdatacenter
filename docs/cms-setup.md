@@ -8,37 +8,39 @@
 
 以下步驟需要有這個 GitHub repo 管理權限的人（例如你）手動完成一次，之後同工就不需要再碰這些：
 
+目前網站部署在 `https://dtdatacenter.brian1024brian1024.workers.dev`（Cloudflare 預設給的 `*.workers.dev` 網址）。之後如果換成正式自訂網域，下面兩個地方要跟著改：GitHub OAuth App 的 Homepage/callback URL（同一個 App 直接編輯網址即可，不用重建），以及 [public/admin/config.yml](../public/admin/config.yml) 的 `base_url`。
+
 ### 1. 建立 GitHub OAuth App
 
 到 GitHub → Settings → Developer settings → [OAuth Apps](https://github.com/settings/developers) → New OAuth App，填：
 
 - **Application name**：隨意，例如「dtdatacenter CMS」
-- **Homepage URL**：網站正式網址，例如 `https://dtdatacenter.pages.dev`（或你們的自訂網域）
-- **Authorization callback URL**：`<網站正式網址>/callback`
+- **Homepage URL**：`https://dtdatacenter.brian1024brian1024.workers.dev`
+- **Authorization callback URL**：`https://dtdatacenter.brian1024brian1024.workers.dev/callback`
 
 建立後會拿到一組 **Client ID** 和 **Client Secret**。
 
 ### 2. 把 Client ID / Secret 設成 Cloudflare 的密鑰
 
-在專案目錄下執行（會提示輸入密鑰值，不會顯示在畫面上）：
+因為現在是接 GitHub 自動部署（Cloudflare 在雲端 build，不是從你本機部署），密鑰要在 **Cloudflare Dashboard** 設定，本機執行 `wrangler secret put` 不會生效：
 
-```bash
-npx wrangler secret put GITHUB_CLIENT_ID
-npx wrangler secret put GITHUB_CLIENT_SECRET
-```
+Cloudflare Dashboard → Workers & Pages → `dtdatacenter` → Settings → Variables and Secrets → 新增兩筆：
 
-這兩個值會被 [src/pages/auth.ts](../src/pages/auth.ts) 和 [src/pages/callback.ts](../src/pages/callback.ts) 用來完成 GitHub OAuth 登入流程（這兩個檔案就是幫 Sveltia CMS 做「登入驗證」的小型 OAuth provider，跑在同一個 Cloudflare Worker 裡，不用另外部署）。
+- `GITHUB_CLIENT_ID`
+- `GITHUB_CLIENT_SECRET`（類型選 Secret，加密存放）
 
-### 3. 把正式網域填進 CMS 設定
+這兩個值會被 [src/pages/auth.ts](../src/pages/auth.ts) 和 [src/pages/callback.ts](../src/pages/callback.ts) 用來完成 GitHub OAuth 登入流程（這兩個檔案就是幫 Sveltia CMS 做「登入驗證」的小型 OAuth provider，跑在同一個 Cloudflare Worker 裡，不用另外部署）。存完通常需要觸發一次重新部署（例如推一個新 commit）才會套用。
 
-打開 [public/admin/config.yml](../public/admin/config.yml)，把 `backend.base_url` 換成網站的正式網址（跟上面 OAuth App 的 Homepage URL 一致），例如：
+### 3. CMS 設定裡的網域
+
+[public/admin/config.yml](../public/admin/config.yml) 的 `backend.base_url` 已經填好目前的網址：
 
 ```yaml
 backend:
   name: github
   repo: dtjoychurch/dtdatacenter
   branch: main
-  base_url: https://dtdatacenter.pages.dev
+  base_url: https://dtdatacenter.brian1024brian1024.workers.dev
   auth_endpoint: auth
 ```
 

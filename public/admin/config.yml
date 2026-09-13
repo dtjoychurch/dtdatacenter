@@ -5,8 +5,7 @@ backend:
   name: github
   repo: dtjoychurch/dtdatacenter # GitHub repo (owner/name)
   branch: main
-  # TODO: 網站正式網域確定後，把下面換成實際網域(例如 https://dtdatacenter.pages.dev 或自訂網域)
-  base_url: https://your-site-domain.example
+  base_url: https://dtdatacenter.brian1024brian1024.workers.dev
   auth_endpoint: auth
 
 # 圖片上傳後存放的資料夾，以及在文章裡對應的參照路徑
