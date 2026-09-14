@@ -5,9 +5,6 @@
   "author": "Joy Church",
   "license": "MIT",
   "packageManager": "npm@10.8.2",
-  "engines": {
-    "node": ">=22"
-  },
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
