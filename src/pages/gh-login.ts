@@ -2,7 +2,13 @@ import type { APIRoute } from "astro";
 import { getOAuthEnv } from "@lib/cloudflareEnv";
 
 // Starts the GitHub OAuth flow for the Sveltia CMS admin at /admin.
-// See src/pages/callback.ts for the other half of the handshake.
+// See src/pages/gh-callback.ts for the other half of the handshake.
+//
+// Named gh-login/gh-callback (not the more conventional auth/callback)
+// because a Cloudflare edge cached a stale 404 for /auth from before this
+// Worker's routing was fixed, and *.workers.dev domains have no exposed
+// cache-purge control. A path that's never been requested before can't
+// have a stale cached entry anywhere.
 export const prerender = false;
 
 export const GET: APIRoute = async ({ url, redirect, cookies, locals }) => {
@@ -22,7 +28,7 @@ export const GET: APIRoute = async ({ url, redirect, cookies, locals }) => {
 
   const authorizeUrl = new URL("https://github.com/login/oauth/authorize");
   authorizeUrl.searchParams.set("client_id", GITHUB_CLIENT_ID);
-  authorizeUrl.searchParams.set("redirect_uri", `${url.origin}/callback`);
+  authorizeUrl.searchParams.set("redirect_uri", `${url.origin}/gh-callback`);
   authorizeUrl.searchParams.set("scope", "repo");
   authorizeUrl.searchParams.set("state", state);
 

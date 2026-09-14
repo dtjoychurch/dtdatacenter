@@ -6,7 +6,7 @@ backend:
   repo: dtjoychurch/dtdatacenter # GitHub repo (owner/name)
   branch: main
   base_url: https://dtdatacenter.brian1024brian1024.workers.dev
-  auth_endpoint: auth
+  auth_endpoint: gh-login
 
 # 圖片上傳後存放的資料夾，以及在文章裡對應的參照路徑
 # 目前 CMS 表單裡還沒有任何 image 欄位在用這個設定；如果之後要加圖片欄位，

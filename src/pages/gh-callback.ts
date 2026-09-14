@@ -2,7 +2,8 @@ import type { APIRoute } from "astro";
 import { getOAuthEnv } from "@lib/cloudflareEnv";
 
 // Completes the GitHub OAuth handshake and hands the token back to the CMS
-// popup window via postMessage, following the protocol Decap/Sveltia CMS expect.
+// popup window via postMessage, following the protocol Decap/Sveltia CMS
+// expect. See src/pages/gh-login.ts for why this isn't named "callback".
 export const prerender = false;
 
 const renderHandshake = (status: "success" | "error", payload: Record<string, string>) => {
@@ -55,7 +56,7 @@ export const GET: APIRoute = async ({ url, cookies, locals }) => {
       client_id: GITHUB_CLIENT_ID,
       client_secret: GITHUB_CLIENT_SECRET,
       code,
-      redirect_uri: `${url.origin}/callback`,
+      redirect_uri: `${url.origin}/gh-callback`,
     }),
   });
 
