@@ -85,7 +85,9 @@ const discipleProfile = defineCollection({
       image: image().optional(),
       imageAlt: z.string().default(""),
       sourceUrl: z.string().optional(),
-      category: z.enum(["article", "bibleStudy"]).optional(),
+      // .catch(undefined) because the CMS's select widget writes "" (not
+      // omitted) when a point-overview page leaves this field blank.
+      category: z.enum(["article", "bibleStudy"]).optional().catch(undefined),
       pdfs: z.array(z.string()).optional(),
       books: z.array(resourceLink).optional(),
     }),

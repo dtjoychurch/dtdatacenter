@@ -17,8 +17,7 @@ backend:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-# 同工儲存後，是否直接 commit 到 main，或是先建立 PR 讓人審核再合併
-publish_mode: editorial_workflow
+# 同工按 Save 後直接 commit 到 main，網站會自動重新部署，不用另外審核合併
 
 locale: zh-Hant
 
