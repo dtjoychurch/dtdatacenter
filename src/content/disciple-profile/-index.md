@@ -1,9 +1,9 @@
 ---
-title: "門徒概要15點"
-description: "門徒生命成長的十五個特質總覽，每一點都有對應的文章、查經與信息資源。"
+title: 門徒概要15點
+description: 門徒生命成長的十五個特質總覽，每一點都有對應文章、查經與信息資源。
 books:
-  - title: "生命成長旅程指引"
-    url: "http://zh.d-a-n.net/disciple-profile/disciple-profile-15point/disciple-profile-book/65-journey-guide-for-new-christian.html"
+  - title: 生命成長旅程指引
+    url: http://zh.d-a-n.net/disciple-profile/disciple-profile-15point/disciple-profile-book/65-journey-guide-for-new-christian.html
 ---
 
 ## 書籍工具
