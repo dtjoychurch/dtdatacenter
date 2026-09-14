@@ -1,9 +1,13 @@
 ---
-title: "在性泛濫中保守自己"
-category: "article"
-sourceUrl: "http://zh.d-a-n.net/disciple-profile/03-close-walk-with-jesus/03-close-walk-with-jesus-article/180-sexual_temptation.html"
+title: 在性泛濫中保守自己
+order: null
+summary: ''
+category: article
 pdfs:
-  - "/downloads/disciple-profile/03-close-walk-with-jesus/03_%E5%9C%A8%E6%80%A7%E6%B3%9B%E6%BF%AB%E4%B8%AD%E4%BF%9D%E5%AE%88%E8%87%AA%E5%B7%B1.pdf"
+  - /downloads/disciple-profile/03-close-walk-with-jesus/03_%E5%9C%A8%E6%80%A7%E6%B3%9B%E6%BF%AB%E4%B8%AD%E4%BF%9D%E5%AE%88%E8%87%AA%E5%B7%B1.pdf
+description: ''
+sourceUrl: http://zh.d-a-n.net/disciple-profile/03-close-walk-with-jesus/03-close-walk-with-jesus-article/180-sexual_temptation.html
+draft: false
 ---
 
 **經文：林前6:12-20, 林前第 7 章**
@@ -32,6 +36,6 @@ c. 情侶避免過份親熱的行為。原則就是只要某個行動引起任�
 
 d. 要養成逃避淫念的習慣。第一個意念是我們不能控制的，但接下來怎樣處理這意念，卻是我們可以控制的，我們要為此負責。每次第一個不潔的意念來時，你便即時禱告，並宣告林前10:13，你會更有力去勝過。
 
-面對情慾的試探，可能有人感到失敗和內疚，但有一個好消息：淫亂是一個可以寬恕的罪。耶穌從來不拒絕在性方面犯罪的人。耶穌的寶血能洗淨我們的污穢。無論你過去或現在有多失敗，只要你認定淫亂是罪，並決心逃避，在耶穌基督裡，你永遠都可以有新的開始。請不要放棄！
+面對情慾的試探，可能有人感到失敗和內疚，但有一個好消息：淫亂是個可以寬恕的罪。耶穌從來不拒絕在性方面犯罪的人。耶穌的寶血能洗淨我們的污穢。無論你過去或現在有多失敗，只要你認定淫亂是罪，並決心逃避，在耶穌基督裡，你永遠都可以有新的開始。請不要放棄！
 
 在性泛濫中保守自己
