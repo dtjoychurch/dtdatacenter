@@ -3,14 +3,6 @@
   "name": "dtdatacenter",
   "compatibility_date": "2026-09-13",
   "main": "./dist/_worker.js/index.js",
-  // The GitHub OAuth Client ID is not secret (it's public in the login URL
-  // itself), so it's safe to commit here. This keeps it from being wiped
-  // by `wrangler deploy` the way a dashboard-only "Variable" would be -
-  // unlike vars, GITHUB_CLIENT_SECRET (a real secret) persists across
-  // deploys on its own and should stay set only in the Cloudflare dashboard.
-  "vars": {
-    "GITHUB_CLIENT_ID": "Ov23li4u9O69f6JYxQEM"
-  },
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",

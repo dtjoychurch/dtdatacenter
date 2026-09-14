@@ -4,63 +4,38 @@
 
 用的是 [Sveltia CMS](https://github.com/sveltia/sveltia-cms)，一個開源、免費的 Git-based CMS，相容 Decap CMS 的設定格式。它透過 GitHub API 直接讀寫這個 repo 的檔案，本身不需要另外的資料庫或帳號系統。
 
-## 還沒完成的部署設定
+## 登入方式：個人存取權杖（Personal Access Token）
 
-以下步驟需要有這個 GitHub repo 管理權限的人（例如你）手動完成一次，之後同工就不需要再碰這些：
+一開始想用 GitHub OAuth App 串登入，結果卡在 Cloudflare Workers 的部署設定跟邊緣快取問題上排查了很久。後來發現 Sveltia CMS 原生支援更簡單的登入方式，特別適合「一小群同工在用」的情況（見 [官方文件](https://sveltiacms.app/en/docs/backends/github)），改用這個之後完全不需要 OAuth App、不需要 Cloudflare secrets、也不需要任何伺服器端程式碼。
 
-目前網站部署在 `https://dtdatacenter.brian1024brian1024.workers.dev`（Cloudflare 預設給的 `*.workers.dev` 網址）。之後如果換成正式自訂網域，下面兩個地方要跟著改：GitHub OAuth App 的 Homepage/callback URL（同一個 App 直接編輯網址即可，不用重建），以及 [public/admin/config.yml](../public/admin/config.yml) 的 `base_url`。
-
-### 1. 建立 GitHub OAuth App
-
-到 GitHub → Settings → Developer settings → [OAuth Apps](https://github.com/settings/developers) → New OAuth App，填：
-
-- **Application name**：隨意，例如「dtdatacenter CMS」
-- **Homepage URL**：`https://dtdatacenter.brian1024brian1024.workers.dev`
-- **Authorization callback URL**：`https://dtdatacenter.brian1024brian1024.workers.dev/callback`
-
-建立後會拿到一組 **Client ID** 和 **Client Secret**。
-
-### 2. 把 Client ID / Secret 設成 Cloudflare 的密鑰
-
-因為現在是接 GitHub 自動部署（Cloudflare 在雲端 build，不是從你本機部署），密鑰要在 **Cloudflare Dashboard** 設定，本機執行 `wrangler secret put` 不會生效：
-
-Cloudflare Dashboard → Workers & Pages → `dtdatacenter` → Settings → Variables and Secrets → 新增兩筆：
-
-- `GITHUB_CLIENT_ID`
-- `GITHUB_CLIENT_SECRET`（類型選 Secret，加密存放）
-
-這兩個值會被 [src/pages/auth.ts](../src/pages/auth.ts) 和 [src/pages/callback.ts](../src/pages/callback.ts) 用來完成 GitHub OAuth 登入流程（這兩個檔案就是幫 Sveltia CMS 做「登入驗證」的小型 OAuth provider，跑在同一個 Cloudflare Worker 裡，不用另外部署）。存完通常需要觸發一次重新部署（例如推一個新 commit）才會套用。
-
-### 3. CMS 設定裡的網域
-
-[public/admin/config.yml](../public/admin/config.yml) 的 `backend.base_url` 已經填好目前的網址：
+[public/admin/config.yml](../public/admin/config.yml) 裡設定：
 
 ```yaml
 backend:
   name: github
   repo: dtjoychurch/dtdatacenter
   branch: main
-  base_url: https://dtdatacenter.brian1024brian1024.workers.dev
-  auth_endpoint: auth
+  auth_methods: [token]
 ```
 
-### 4. 讓同工有 repo 寫入權限
+### 讓同工有 repo 寫入權限
 
-Sveltia CMS 用同工自己的 GitHub 帳號登入、透過 GitHub API 寫入這個 repo，所以每位要編輯內容的同工都需要：
+Sveltia CMS 用同工自己的 GitHub 帳號存取這個 repo，所以每位要編輯內容的同工都需要：
 
 1. 有自己的 GitHub 帳號
-2. 被加進這個 repo 的 Collaborators（Settings → Collaborators），或所在的 GitHub organization/team 有這個 repo 的寫入權限
+2. 被加進這個 repo 的 Collaborators（GitHub → 這個 repo → Settings → Collaborators），或所在的 GitHub organization/team 有這個 repo 的寫入權限
 
-### 5.（可選）本機測試登入流程
-
-複製 `.dev.vars.example` 成 `.dev.vars`，填入同一組 Client ID/Secret（這個檔案已加進 `.gitignore`，不會被 commit），然後 `npm run dev` 並開啟 `http://localhost:4321/admin`。GitHub OAuth callback 網址需要能連到你本機測試的網址，通常本機測試建議直接用 GitHub OAuth App 的 callback 設成 `http://localhost:4321/callback`，或另外建一個測試用的 OAuth App。
-
-## 日常使用（同工視角）
+### 同工登入步驟
 
 1. 打開 `https://<正式網址>/admin`
-2. 用 GitHub 帳號登入（第一次會跳出 GitHub 授權畫面）
-3. 左側選單選內容類型（例如「門徒概要」「部落格」），選一篇或按「New」新增
-4. 編輯完按「Save」，內容就會變成一個 commit 推上 GitHub，網站會自動重新部署
+2. 按「**Sign In with Token**」
+3. 畫面會給一個連到 GitHub 的連結，點下去會直接到「產生新 token」的頁面，需要的權限範圍（scope）已經幫你勾好了
+4. 在 GitHub 那邊按「Generate token」，把產生的 token 複製起來
+5. 貼回 Sveltia CMS 的登入畫面，完成登入
+
+這組 token 存在同工自己瀏覽器的 local storage，不會外流到我們的伺服器。GitHub token 有效期限依產生時選的設定而定，過期後同工只要重新產生一次貼上即可。
+
+登入後，左側選單選內容類型（例如「門徒概要」），選一篇或按「New」新增，編輯完按「Save」，內容就會變成一個 commit 推上 GitHub，網站會自動重新部署。
 
 ## 內容遷移現況與頁面結構
 

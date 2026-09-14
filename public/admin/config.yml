@@ -5,8 +5,9 @@ backend:
   name: github
   repo: dtjoychurch/dtdatacenter # GitHub repo (owner/name)
   branch: main
-  base_url: https://dtdatacenter.brian1024brian1024.workers.dev
-  auth_endpoint: gh-login
+  # 用個人存取權杖（Personal Access Token）登入，不用 OAuth App，也不需要
+  # 額外的伺服器端程式碼。適合小團隊使用，詳見 docs/cms-setup.md。
+  auth_methods: [token]
 
 # 圖片上傳後存放的資料夾，以及在文章裡對應的參照路徑
 # 目前 CMS 表單裡還沒有任何 image 欄位在用這個設定；如果之後要加圖片欄位，
